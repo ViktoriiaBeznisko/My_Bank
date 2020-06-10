@@ -1,0 +1,14 @@
+<section class="new-money-request container">
+    <div class="form-group col-md-6"> 
+        <br><h2>Create new money request:</h2>
+        <p><%= @error %></p>
+        <%= form_for @money_request do |f| %>
+            <%= f.hidden_field :borrowed_id, :value => current_user.id %>      
+            <p>I plan to repay the loan on: <%= f.date_field :terms, min: Date.today,  :class => "form-control" %> </p>
+            <p>Amount (USD): <%= f.number_field :amount, min: 1, :class => "form-control" %></p>
+            <%= f.submit "Create", :class => "btn btn-dark" %>
+        <% end %><br></br>
+        <%= link_to 'Show my requests', money_requests_path, :class => "btn btn-dark"%>
+        <%= link_to 'Home', user_path(current_user.id), :class => "btn btn-dark" %>
+    </div>
+</section>

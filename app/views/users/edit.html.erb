@@ -1,0 +1,16 @@
+<section class="new-user container">
+    <div class="form-group col-md-6"> 
+        <h2>Update your account</h2>
+        <p><%= @error %></p>
+        <%= form_for @user do |f| %>
+            <p>Name: <%= f.text_field :name, :class => "form-control" %></p>
+            <p>Password: <%= f.text_field :password, :class => "form-control" %></p>
+            <p>Email: <%= f.text_field :email, :class => "form-control" %></p>
+            <p>Card type <%= f.select :card_type, options_for_select(["Select One", "amex", "visa", "master card" ]) %></p>
+            <p>Credit / Debit Card # <%= f.text_field :card_token, maxlength: 16 %></p>
+            <br><%= f.submit "Update", :class => "btn btn-success" %>  
+        <% end %><br>
+        <%= link_to 'Go back to my home page ', user_path(current_user.id), :class => "btn btn-dark" %>
+    </div>
+</section>
+

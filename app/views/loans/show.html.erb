@@ -1,0 +1,62 @@
+<section class="show-loan container">
+<table class="table table-bordered table-sm table table-striped">
+<h2 class="text-danger"> Loan details:</h2>
+<thead class="table table-sm">
+    <tr>
+        <th scope="col">Lender name</th>
+        <td><%= @loan.lender.name %></td>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <th scope="col">Borrowed name</th>
+        <td><%= @loan.borrowed.name %></td>
+    </tr>
+    <tr class="table-success">
+        <th scope="col">Amount</th>
+        <td><%= @loan.amount_cents %> USD </td>
+    </tr>
+    <tr>            
+        <th scope="col">Opening Day</th>
+        <td><%= @loan.opening_loan_day.to_date %></td> 
+    </tr>
+    <tr>
+        <th scope="col">Terms</th>
+        <td><%= loan_terms %></td>          
+    </tr>
+    <tr>
+        <th scope="col">Percentage</th>
+        <td><%= @loan.percentage %>%</td>          
+    </tr>
+    <tr>
+        <th scope="col">Closing Day</th>
+        <td><% if @loan.closing_loan_day == nil %>
+            Estimated closing day <%= @loan.money_request.terms %>
+        <% else %>
+            <%= @loan.closing_loan_day %> 
+        <% end %></td>
+    </tr>
+    <tr> 
+        <th scope="col">Status</th>
+        <td><% if @loan.status = 0 %>
+                Not paid yet
+        <% else %>
+                Paid
+        <% end %></td>
+    </tr>
+    <tr class="table-primary"> 
+        <th scope="col">Total Paid</th>
+        <td><% if @loan.total_paid == nil %>
+            Not paid yet
+        <% else %>
+            <%= @loan.total_paid %>
+        <% end %></td>
+    </tr>
+</tbody>
+</table>
+    <% if @loan.status = 0 && @loan.borrowed_id == current_user.id %>
+    <p class="text-danger"> You have left <%= days_left %> to pay your loan</p>
+    <% end %><br>
+<%= link_to 'Go back to my Home page ', user_path(current_user.id), :class => "btn btn-dark" %>
+</section>  
+

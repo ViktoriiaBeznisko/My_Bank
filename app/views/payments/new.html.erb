@@ -1,0 +1,25 @@
+<section class="new-loan container">
+    <div class="form-group col-md-10"><br>
+        <h4 class="text-dark"> <%= current_user.name %>, please provide your payment information: </h4>
+        <p class="text-dark"> Transfer amount: <%= current_loan.amount_cents %> USD </p>
+        <%= form_for @payment, url: loan_payments_path, method: :post do |f| %>  
+            <p>Card type <%= f.select :card_type, options_for_select(["Select One", "amex", "visa", "master card" ]) %></p>
+            <p>Credit / Debit Card # <%= f.text_field :card_token, maxlength: 16 %></p>
+
+            <%= f.hidden_field :loan_id, :value => current_loan.id %>
+            <%= f.hidden_field :lender_id, :value => current_loan.lender.id %>
+            <%= f.hidden_field :borrowed_id, :value => current_loan.borrowed.id %>
+            <% if current_loan.lender.id == current_user.id %>
+                <%= f.hidden_field :amount, :value => current_loan.amount_cents %>
+            <% else %>
+                <%= f.hidden_field :amount, :value => total_paid %>
+            <% end %>
+
+            <%= f.submit "Pay", :class => "btn btn-success" %>
+        <% end %>
+    </div>
+</section>  
+
+
+
+

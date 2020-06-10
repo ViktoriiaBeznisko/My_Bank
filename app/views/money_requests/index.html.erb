@@ -1,0 +1,51 @@
+<section class="money-request container">
+<table class="table table-bordered table-striped table-sm">
+    <% if @my_requests.length < 1  %>
+        <br><h3> Hi <%= current_user.name %>! You do not have any of money requests yet. </h3>
+    <% else %>
+        <br><h3> Hi <%= current_user.name %>! Here are all your money requests:</h3>   
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Amount, USD</th>
+                <th scope="col">Estimated payment day</th>
+                <th scope="col">Status</th>
+                <th scope="col">Option</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @my_requests.each_with_index do |request, index|  %>
+            <tr>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= request.amount %></td>
+                <td><%= request.terms %></td>
+
+                <td><% if request.incomplete? && !request.actual? %>
+                    <%= "Not actual. Pleasee change estimated payment day" %>
+                <% elsif request.incomplete? && request.actual? %>
+                    <%= "Pending" %>
+                <% elsif request.loan.complete? %>
+                    <%= "Paid" %>
+                <% else %>
+                    <%=  "Payment required" %>
+                <% end %></td>
+
+                <td><% if request.complete? %> 
+                    <%= link_to "Check your Loan", money_request_loan_path(request.id, request.loan.id), :class => "btn btn-warning" %>
+                <% else %>
+                    <%= link_to "Edit Money Request", edit_money_request_path(request), :class => "btn btn-light" %>
+                <% end %></td>
+            </tr>
+            <% end %><br>
+        </tbody>
+    <% end %>
+</table>
+    <%= link_to 'Request money', new_money_request_path, :class => "btn btn-dark" %>
+    <%= link_to 'Home', user_path(current_user.id), :class => "btn btn-dark" %>
+</section>
+
+
+
+
+
+        

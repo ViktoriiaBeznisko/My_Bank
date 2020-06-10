@@ -1,0 +1,16 @@
+<section class="close-loan container">
+    <div class="form-group col-md-10"><br>
+        <h4 class="text-dark"> By clicking "Close my loan" you are accepting the following  conditions:</h4>
+          <p class="text-dark"> I`m, <%= current_user.name %>, going to lend <%= current_money_request.amount %> USD to <%= current_money_request.borrowed.name %> for <%= request_terms %> </p>
+        <p class="text-dark"> Borrowed (<%= current_money_request.borrowed.name %>) undertakes to refund <%= current_money_request.amount %> USD + <%= set_terms %> % * before <%= current_money_request.terms %> .</p>
+        
+        <%= form_for @loan, url: money_request_loans_path, method: :post do |f| %>  
+
+            <%= f.hidden_field :total_paid, :value => total_paid %>
+            <%= f.hidden_field :closing_loan_day, :value => Date.today %>
+            <%= f.submit "Close my loan", :class => "btn btn-success" %>
+        <% end %>
+        <br></br>
+        <%= link_to 'Go back to the Home page', user_path(current_user.id), :class => "btn btn-dark" %>     
+    </div>
+</section>  

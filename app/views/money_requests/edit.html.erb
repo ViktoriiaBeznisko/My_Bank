@@ -1,0 +1,14 @@
+<section class="edit-money-request container">
+    <div class="form-group col-md-6"> 
+        <br><h2>Edit money request:</h2>
+        <p1><%= @error %></p1>
+        <%= form_for @request do |f| %>
+            <p>Change the day: <%= f.date_field :terms, min: Date.today,  :class => "form-control" %> </p>
+            <p>Change amount (USD): <%= f.number_field :amount, min: 1, :class => "form-control" %></p>
+            <%= f.submit "Edit", :class => "btn btn-dark" %>
+            <%= link_to 'Delete', money_request_path(@request), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => "btn btn-danger" %>
+        <% end %><br></br>
+        <%= link_to 'Show my requests', money_requests_path, :class => "btn btn-dark"%>
+        <%= link_to 'Home', user_path(current_user.id), :class => "btn btn-dark" %>
+    </div>
+</section>
